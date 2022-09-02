@@ -1,7 +1,7 @@
 
 # ra-utils
 
-Unix-like general purpose spectral processing utilities.
+Unix-like general purpose spectral and rtlsdr processing utilities.
 Those utilities are designed for minimal resource requirements and dependencies. They can be built statically and do not require Python, GNU Radio or any heavy framework.
 
 The set is composed of the following binaries:
@@ -11,9 +11,11 @@ Reads the samples from an arbitrary sized uint_8 IQ file, integrates them, and c
 - `avgpwr`
 Reads samples from an RTLSDR dongle at a given frequency and sample rate, then computes their averaged power over a period of time. Requires libfftw3.
 - `proc`
-Reads the frequency/power values from a spectum and a reference file. Those files can be generated from either avgfft or from rtl_power_fftw if storing the IQ file isn't required. `proc` can then perform the reference division, RFI removal, slope correction, conversion to radial velocity, and finally outputs the resulting values
+Reads the frequency/power values from a spectum and a reference file. Those files can be generated from either avgfft or from [rtl_power_fftw](https://github.com/AD-Vega/rtl-power-fftw) if storing the IQ file isn't required.
+`proc` then performs the reference division, RFI removal, slope correction, conversion to radial velocity, and finally outputs the resulting values
 - `plot`
-Plots the values from "proc" to a PNG file. Requires golang and gonum/plot. `plot`is freestanding, it does not require GTK, QT, Cairo or any toolkit. 
+Plots the values from "proc" to a PNG file. Building requires golang and gonum/plot. 
+`plot`is freestanding, it does not require GTK, QT, Cairo or any toolkit. 
 - `radec`
 Translates ALT-AZ pointing coordinates to RA:DEC coordinates, which can be fed to `vlsr`. Requires libnova (static building possible).
 - `spectra.sh`
@@ -51,11 +53,11 @@ $rtl_sdr -f 100000000 -n $((2048000 * 3)) output.bin`
 Use a while loop that will:
 - Acquire samples to a file (ideally sitting on a RAMdisk):
 
-`for i in $(seq 1 1024); do rtl_sdr (...); done` 
-- Convert the samples to the frequency domain, format the output to a row, and append it to a file:
+`for i in $(seq 1 1024); do rtl_sdr (...)`
+- For each samples batch, convert it to the frequency domain, then format the output to a row and append it to a file:
 
 `./avgfft output.bin | tr '\n' '  >> survey.txt`
-- When done, plot using GNUplot:
+- After the loop is done, plot the resulting array using GNUplot:
 
 `plot survey.txt binary array=(2048,1441) format="%float64" with image notitle`
 
