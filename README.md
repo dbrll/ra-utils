@@ -9,7 +9,7 @@ The set is composed of the following binaries:
 - `avgfft`
 Reads the samples from an arbitrary sized uint_8 IQ file, integrates them, and converts them to frequency bins. Requires libfftw3.
 - `avgpwr`
-Reads samples from an RTLSDR dongle at a given frequency and sample rate, then computes their averaged power over a period of time. Requires libfftw3.
+Reads samples from an RTLSDR dongle at a given frequency and sample rate, then computes their averaged power over a period of time.
 - `proc`
 Reads the frequency/power values from a spectum and a reference file. Those files can be generated from either avgfft or from [rtl_power_fftw](https://github.com/AD-Vega/rtl-power-fftw) if storing the IQ file isn't required.
 `proc` then performs the reference division, RFI removal, slope correction, conversion to radial velocity, and finally outputs the resulting values
