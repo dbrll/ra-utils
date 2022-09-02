@@ -77,7 +77,7 @@ int main(int argc, char *argv[], const char** optstring){
                                 break;                                           
                         case 'd':
                                 d = 1;
-                                printf("Using debibels\n");
+                                fprintf(stderr,"Using decibels\n");
                                 break;
                         case 'h':
                                 help();
