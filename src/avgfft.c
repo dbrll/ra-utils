@@ -1,4 +1,4 @@
-//  gcc fft.c -lfftw3 -lm -O3 -o ../bin/fft
+//  gcc avgfft.c -lfftw3 -lm -O3 -o ../bin/avgfft
 
 #include<stdio.h>
 #include<stdlib.h>
@@ -16,8 +16,9 @@ static fftw_complex* out;
 static fftw_plan p;
 
 int help(void) {
-        printf("Usage: fft [-b 64-8192] FILENAME\n"                                
-        "[-b frequency bins (default: 512)]\n"); 
+        printf("Usage: fft [-b 64-8192] [-d ] FILENAME\n"                                
+        "[-b frequency bins (default: 512)]\n"
+        "[-d outputs decibels (not default)]\n"); 
         exit(0);                                        
 }
 
@@ -61,8 +62,9 @@ int main(int argc, char *argv[], const char** optstring){
                 help();
         int opt;
         int i = 0;
+        int d = 0;
         
-        while((opt = getopt(argc, argv, "b:h")) != -1){                     
+        while((opt = getopt(argc, argv, "b:dh")) != -1){                     
                 switch(opt){                                                  
                          case 'b':                                                
                                 i = (int) strtol(optarg, (char**) NULL, 10);     
@@ -73,6 +75,10 @@ int main(int argc, char *argv[], const char** optstring){
                                         exit(0);
                                 }                                
                                 break;                                           
+                        case 'd':
+                                d = 1;
+                                printf("Using debibels\n");
+                                break;
                         case 'h':
                                 help();
                 }                                                                
@@ -126,12 +132,14 @@ int main(int argc, char *argv[], const char** optstring){
         free(fft_tmp);
 
         // Convert to dB
-        for (int i=0; i<nbins; i++)
-                fft_final[i] = 20 * log10(fft_final[i]);
+        if (d)
+                for (int i=0; i<nbins; i++)
+                        fft_final[i] = 20 * log10(fft_final[i]);
+        
 
-        for (int i=0; i<nbins; i++) {
+        for (int i=0; i<nbins; i++)
                 printf("%lf\n", fft_final[i] - 127.34);
-        }
+        
         free(fft_final);
         return 0;
 }
