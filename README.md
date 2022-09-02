@@ -1,3 +1,4 @@
+
 # ra-utils
 
 Unix-like general purpose spectral processing utilities.
@@ -19,7 +20,7 @@ Translates ALT-AZ pointing coordinates to RA:DEC coordinates, which can be fed t
 Full pipeline demonstration. Acquires samples center around the HI line, dumps it to a file, acquires a reference, runs avgfft, proc, and generates a plot. MISSING: VLSR correction.
 After feeding the data through `plot`:
 
-![HI spectra](https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/h1.png)
+<img src="https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/h1.png" alt="drawing" width="400"/>
 
 - `yfact.sh`
 Compute the Y factor of a device. Used to determine the system temperature (Tsys)
@@ -34,15 +35,19 @@ Tested on Linux/amd64 with both musl and glibc.
  
 **Plot FM spectrum**
 - Acquire 3 seconds of samples with rtl_sdr:
-   `rtl_sdr -f 100000000 -n $((2048000 * 3)) output.bin`
+
+$rtl_sdr -f 100000000 -n $((2048000 * 3)) output.bin`
 - Average the IQ samples to 1024 frequency bins (Fourier transform):
+
 `./avgfft output.bin -b 1024 > spectrum.txt`
+
 - Plot the result:
 `./plot -xlegend "Frequency (Hz)" -title "Power Spectral Density" spectrum.txt`
 
-![FM plot](https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/fm.png)
+<img src="https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/fm.png" alt="drawing" width="400"/>
 
 **Perform a survey**
+
 Use a while loop that will:
 - Acquire samples to a file (ideally sitting on a RAMdisk):
 
@@ -54,4 +59,4 @@ Use a while loop that will:
 
 `plot survey.txt binary array=(2048,1441) format="%float64" with image notitle`
 
-![HI survey](https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/survey.png)
+<img src="https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/survey.png" alt="drawing" width="400"/>
