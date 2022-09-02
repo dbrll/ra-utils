@@ -17,9 +17,10 @@ Reads the frequency/power values from a spectum and a reference file. Those file
 Plots the values from "proc" to a PNG file. Building requires golang and gonum/plot. 
 `plot`is freestanding, it does not require GTK, QT, Cairo or any toolkit. 
 - `radec`
-Translates ALT-AZ pointing coordinates to RA:DEC coordinates, which can be fed to `vlsr`. Requires libnova (static building possible).
+Translates ALT-AZ pointing coordinates to RA:DEC coordinates, which can be fed to `vlsr`. Requires libnova (static building is possible).
 - `spectra.sh`
-Full pipeline demonstration. Acquires samples center around the HI line, dumps it to a file, acquires a reference, runs avgfft, proc, and generates a plot. MISSING: VLSR correction.
+Full pipeline demonstration. Acquires samples centered around the HI line, dumps it to a file, acquires a reference, runs avgfft, proc, then generates a plot. MISSING: VLSR correction.
+
 After feeding the data through `plot`:
 
 <img src="https://raw.githubusercontent.com/dbrll/ra-utils/assets/img/h1.png" alt="drawing" width="400"/>
