@@ -51,7 +51,7 @@ Tested on Linux/amd64 with both musl and glibc.
 
 **Perform a survey**
 
-Use a while loop that will:
+Use a for loop that will:
 - Acquire samples to a file (ideally sitting on a RAMdisk):
 
 `for i in $(seq 1 1024); do rtl_sdr (...)`
